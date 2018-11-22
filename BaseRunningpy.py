@@ -1,22 +1,5 @@
 import random
-
-#test comment
-
-class Player:
-    def __init__(self, name, team):
-        self.Name = name
-        self.Team = team
-
-class Team:
-    def __init__(self, name):
-        self.Name = name
-        self.Players = None
-
-class Bases:
-    def __init__(self, name):
-        self.Name = name
-        self.PlayerHere = None
-
+from ClassFactory import *
 
 TheBrewers = Team('TheBrewers')
 
@@ -29,10 +12,10 @@ p5 = Player('Jonathan Schoop', TheBrewers)
 
 TheBrewers.Players = [p1, p2, p3, p4, p5]
 
-FirstBase = Bases('FirstBase')
-SecondBase = Bases('SecondBase')
-ThirdBase = Bases('ThirdBase')
-Home = Bases('Home')
+FirstBase = Base('FirstBase')
+SecondBase = Base('SecondBase')
+ThirdBase = Base('ThirdBase')
+Home = Base('Home')
 
 
 AllBases = [FirstBase, SecondBase, ThirdBase, Home]
@@ -48,6 +31,8 @@ RunnerOnSecond = [AllBases[0].PlayerHere == None and AllBases[1].PlayerHere != N
 RunnerOnThird = [AllBases[0].PlayerHere == None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere != None]
 
 ##TwoBaseRunners##
+
+#TODD: RunnersOnFirstandSecond and RunnersOnSecondandThird are the same.
 
 RunnersOnFirstandSecond = [AllBases[0].PlayerHere == None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
 RunnersOnSecondandThird = [AllBases[0].PlayerHere == None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
