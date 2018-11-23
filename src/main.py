@@ -1,4 +1,7 @@
-DEBUG = True
+from class_factory import *
+from base_running import *
+
+DEBUG_MODE = True
 
 
 def main(debug_mode):
@@ -12,8 +15,13 @@ def main(debug_mode):
         Takes global debug as bool
 
     """
+    if(debug_mode):
+        test = test_main()
+    else:
+        main = main()
+
     print("Hello")
 
 
 if __name__ == '__main__':
-    main(DEBUG)
+    main(DEBUG_MODE)

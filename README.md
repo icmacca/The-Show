@@ -30,7 +30,7 @@ and get some kind of feedback
 
 ## Dependencies
 
-Pretty sure we will just run it locally?
+Plan on using [baseballpy](https://github.com/jldbc/pybaseball) for pulling up-to-date stats.
 
 ## Deployment
 
