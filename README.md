@@ -30,7 +30,7 @@ and get some kind of feedback
 
 ## Dependencies
 
-Plan on using [baseballpy](https://github.com/jldbc/pybaseball) for pulling up-to-date stats.
+Plan on using [pybaseball](https://github.com/jldbc/pybaseball) for pulling up-to-date stats. I think it's legit just to include this?
 
 ## Deployment
 
