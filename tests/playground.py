@@ -1,4 +1,5 @@
 from src.class_factory import *
+from pybaseball import batting_stats_bref
 
 
 def get_players(team):
@@ -27,6 +28,11 @@ def get_base_manager(bases):
     return bm
 
 
+def test_out_pybaseball():
+    data = batting_stats_bref()
+    print(data)
+
+
 def test_main():
     """
     Main test function
@@ -38,3 +44,5 @@ def test_main():
 
     for base in bases_manager.Bases:
         print(base.Name)
+
+        test_out_pybaseball()

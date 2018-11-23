@@ -1,5 +1,6 @@
-from class_factory import *
-from base_running import *
+from tests.playground import *
+from src.class_factory import *
+from src.base_running import *
 
 DEBUG_MODE = True
 
@@ -16,11 +17,9 @@ def main(debug_mode):
 
     """
     if(debug_mode):
-        test = test_main()
+        test_main()
     else:
-        main = main()
-
-    print("Hello")
+        pass
 
 
 if __name__ == '__main__':
