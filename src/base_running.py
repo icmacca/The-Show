@@ -42,9 +42,10 @@ RunnerOnThird = [AllBases[0].PlayerHere ==
 ##TwoBaseRunners##
 
 # TODD: RunnersOnFirstandSecond and RunnersOnSecondandThird are the same.
+# MACCA: FIXED RunnersOnFirstandSecond
 
 RunnersOnFirstandSecond = [AllBases[0].PlayerHere ==
-                           None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
+                           None and AllBases[0].PlayerHere != None and AllBases[1].PlayerHere != None]
 RunnersOnSecondandThird = [AllBases[0].PlayerHere ==
                            None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
 RunnersOnFirstandThird = [AllBases[0].PlayerHere !=
