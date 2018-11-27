@@ -1,62 +1,21 @@
+
 import random
-from .class_factory import Player
-from .class_factory import Team
-from .class_factory import Base
-from .class_factory import BasesManager
-from .class_factory import BasesStatus
-from .class_factory import SwingPower
-
-TheBrewers = Team('TheBrewers')
-
-p1 = Player('Christian Yelich', TheBrewers)
-p2 = Player('Ryan Braun', TheBrewers)
-p3 = Player('Lorenzo Cain', TheBrewers)
-p4 = Player('Jesus Aguilar', TheBrewers)
-p5 = Player('Jonathan Schoop', TheBrewers)
-
-TheBrewers.Players = [p1, p2, p3, p4, p5]
-
-FirstBase = Base('FirstBase')
-SecondBase = Base('SecondBase')
-ThirdBase = Base('ThirdBase')
-Home = Base('Home')
-
-TheBaseManager = BasesManager([FirstBase, SecondBase, ThirdBase, Home])
-
-AllBases = [FirstBase, SecondBase, ThirdBase, Home]
-
-##Bases Empty##
-
-BasesEmpty = [AllBases[0].PlayerHere == None and AllBases[1].PlayerHere ==
-              None and AllBases[2].PlayerHere == None]
-
-##One Base Runner##
-
-RunnerOnFirst = [AllBases[0].PlayerHere !=
-                 None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere == None]
-RunnerOnSecond = [AllBases[0].PlayerHere ==
-                  None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere == None]
-RunnerOnThird = [AllBases[0].PlayerHere ==
-                 None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere != None]
-
-##TwoBaseRunners##
-
-# TODD: RunnersOnFirstandSecond and RunnersOnSecondandThird are the same.
-
-RunnersOnFirstandSecond = [AllBases[0].PlayerHere ==
-                           None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
-RunnersOnSecondandThird = [AllBases[0].PlayerHere ==
-                           None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
-RunnersOnFirstandThird = [AllBases[0].PlayerHere !=
-                          None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere != None]
-
-##ThreeBaseRunners##
-
-BasesLoaded = [AllBases[0].PlayerHere != None and AllBases[1].PlayerHere !=
-               None and AllBases[2].PlayerHere != None]
+if __name__ == "__main__":
+    # if this module is run directly
+    # need to import from class_factory, not src.class_factory
+    # because that is the package we are already in
+    from class_factory import *
+else:
+    # import from src, assuming calling import is module
+    # in the root that can see src
+    from src.class_factory import SwingPower
+    from src.class_factory import BasesStatus
+    from src.class_factory import Team
+    from src.class_factory import Player
+    from src.class_factory import BasesManager
+    from src.class_factory import Base
 
 
-# Creates a Base Status object based on the first BaseResult that gets passed into next BaseResult function
 def BaseSituationType(c_b_situation):
 
     # c_b_sitatuion represents current bases situation
@@ -109,6 +68,44 @@ def BaseSituationType(c_b_situation):
 
             print('BasesLoaded!')
             return c_b_situation and BasesLoaded
+
+
+def BaseResult_Todd(player: Player, base_manager: BasesManager):
+    """
+    Demo function to show use of enums
+    Only models the bases empty scenario from original BaseResult func
+    """
+
+    hit_result: SwingPower = SwingPower.TwoBase
+    base_status: BasesStatus = base_manager.get_base_status()
+
+    if base_status == BasesStatus.BasesEmpty:
+
+        if hit_result == SwingPower.OneBase:
+            base_manager.Bases[0].PlayerHere = player
+        elif hit_result == SwingPower.TwoBase:
+            base_manager.Bases[1].PlayerHere = player
+        elif hit_result == SwingPower.ThreeBase:
+            base_manager.Bases[2].PlayerHere = player
+        elif hit_result == SwingPower.HomeRun:
+            player.Team.Score += 1
+        elif hit_result == SwingPower.NoBases:
+            player.Team.Outs += 1
+
+    elif base_status == BasesStatus.FirstOnly:
+        pass
+    elif base_status == BasesStatus.SecondOnly:
+        pass
+    elif base_status == BasesStatus.ThirdOnly:
+        pass
+    elif base_status == BasesStatus.FirstAndSecond:
+        pass
+    elif base_status == BasesStatus.FirstAndThird:
+        pass
+    elif base_status == BasesStatus.SecondAndThird:
+        pass
+    elif base_status == BasesStatus.Loaded:
+        pass
 
 
 def Baseresult(PlayerObject, CurrentBasesObject, CurrentBasestypeObject):
@@ -306,21 +303,74 @@ def Baseresult(PlayerObject, CurrentBasesObject, CurrentBasestypeObject):
         pass
 
 
-# Example of Advancing Runners below on Back to Back Doubles
+if __name__ == "__main__":
+    """
+    This code will only run 
+    if this module is executed directly
+    """
 
+    # Creates a Base Status object based on the first BaseResult that gets passed into next BaseResult function
 
-# Start of Inning will always have the Bases Empty Object as the CurrentBaseType Object
-NewBases = Baseresult(p1, AllBases, BasesEmpty)
+    TheBrewers = Team('TheBrewers')
 
-base_status1 = BaseSituationType(NewBases)
+    p1 = Player('Christian Yelich', TheBrewers)
+    p2 = Player('Ryan Braun', TheBrewers)
+    p3 = Player('Lorenzo Cain', TheBrewers)
+    p4 = Player('Jesus Aguilar', TheBrewers)
+    p5 = Player('Jonathan Schoop', TheBrewers)
 
-print(NewBases[1].PlayerHere.Name + '\n')
+    TheBrewers.Players = [p1, p2, p3, p4, p5]
 
-NewBases2 = Baseresult(p2, NewBases, base_status1)
+    FirstBase = Base('FirstBase', 1)
+    SecondBase = Base('SecondBase', 2)
+    ThirdBase = Base('ThirdBase', 3)
+    Home = Base('Home', 4)
 
-base_status2 = BaseSituationType(NewBases2)
+    AllBases = [FirstBase, SecondBase, ThirdBase, Home]
 
-print(NewBases2[1].PlayerHere.Name)
+    ##Bases Empty##
 
-print(NewBases2[3].Name)
-print(NewBases2[3].PlayerHere.Name)
+    BasesEmpty = [AllBases[0].PlayerHere == None and AllBases[1].PlayerHere ==
+                  None and AllBases[2].PlayerHere == None]
+
+    ##One Base Runner##
+
+    RunnerOnFirst = [AllBases[0].PlayerHere !=
+                     None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere == None]
+    RunnerOnSecond = [AllBases[0].PlayerHere ==
+                      None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere == None]
+    RunnerOnThird = [AllBases[0].PlayerHere ==
+                     None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere != None]
+
+    ##TwoBaseRunners##
+
+    # TODD: RunnersOnFirstandSecond and RunnersOnSecondandThird are the same.
+
+    RunnersOnFirstandSecond = [AllBases[0].PlayerHere ==
+                               None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
+    RunnersOnSecondandThird = [AllBases[0].PlayerHere ==
+                               None and AllBases[1].PlayerHere != None and AllBases[2].PlayerHere != None]
+    RunnersOnFirstandThird = [AllBases[0].PlayerHere !=
+                              None and AllBases[1].PlayerHere == None and AllBases[2].PlayerHere != None]
+
+    ##ThreeBaseRunners##
+
+    BasesLoaded = [AllBases[0].PlayerHere != None and AllBases[1].PlayerHere !=
+                   None and AllBases[2].PlayerHere != None]
+    # Example of Advancing Runners below on Back to Back Doubles
+
+    # Start of Inning will always have the Bases Empty Object as the CurrentBaseType Object
+    NewBases = Baseresult(p1, AllBases, BasesEmpty)
+
+    base_status1 = BaseSituationType(NewBases)
+
+    print(NewBases[1].PlayerHere.Name + '\n')
+
+    NewBases2 = Baseresult(p2, NewBases, base_status1)
+
+    base_status2 = BaseSituationType(NewBases2)
+
+    print(NewBases2[1].PlayerHere.Name)
+
+    print(NewBases2[3].Name)
+    print(NewBases2[3].PlayerHere.Name)

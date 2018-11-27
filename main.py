@@ -17,7 +17,9 @@ def main(debug_mode):
 
     """
     if(debug_mode):
-        test_main()
+        # macca - put a break point here and see how the func
+        # with the enums works
+        test_base_running_with_enums()
     else:
         pass
 
